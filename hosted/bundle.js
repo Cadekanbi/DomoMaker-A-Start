@@ -5,7 +5,7 @@ var handleDomo = function handleDomo(e) {
 
     $("#domoMessage").animate({ width: 'hide' }, 350);
 
-    if ($("#domoName").val() == '' || $("#domoAge").val() == '') {
+    if ($("#domoName").val() == '' || $("#domoAge").val() == '' || $("#domoAbility") == '') {
         handleError("RAWR! All fields are required");
         return false;
     }
@@ -39,6 +39,12 @@ var DomoForm = function DomoForm(props) {
             "Age: "
         ),
         React.createElement("input", { id: "domoAge", type: "text", name: "age", placeholder: "Domo Age" }),
+        React.createElement(
+            "label",
+            { htmlFor: "ability" },
+            "Special Ability: "
+        ),
+        React.createElement("input", { id: "domoAbility", type: "text", name: "ability", placeholder: "Domo Special Ability" }),
         React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
         React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Make Domo" })
     );
@@ -75,6 +81,18 @@ var DomoList = function DomoList(props) {
                 " Age: ",
                 domo.age,
                 " "
+            ),
+            React.createElement(
+                "h3",
+                { className: "domoAbility" },
+                " Special Ability: ",
+                domo.ability,
+                " "
+            ),
+            React.createElement(
+                "button",
+                { className: "removeDomo", type: "text", onclick: "removeDomo()" },
+                " Delete "
             )
         );
     });
@@ -90,6 +108,13 @@ var loadDomosFromServer = function loadDomosFromServer() {
     sendAjax('GET', '/getDomos', null, function (data) {
         ReactDOM.render(React.createElement(DomoList, { domos: data.domos }), document.querySelector("#domos"));
     });
+};
+
+var removeDomo = function removeDomo() {
+    sendAjax('POST', '/deleteDomo', null, function (data) {
+        ReactDOM.render(React.createElement(DomoList, { domos: data.domos }), document.querySelector("#domos"));
+    });
+    loadDomosFromServer();
 };
 
 var setup = function setup(csrf) {

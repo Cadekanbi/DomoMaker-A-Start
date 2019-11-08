@@ -15,13 +15,14 @@ const makerPage = (req, res) => {
 };
 
 const makeDomo = (req, res) => {
-  if (!req.body.name || !req.body.age) {
-    return res.status(400).json({ error: 'RAWR! Both name and age are required' });
+  if (!req.body.name || !req.body.age || !req.body.ability) {
+    return res.status(400).json({ error: 'RAWR! All fields are required' });
   }
 
   const domoData = {
     name: req.body.name,
     age: req.body.age,
+    ability: req.body.ability,
     owner: req.session.account._id,
   };
 
@@ -35,6 +36,22 @@ const makeDomo = (req, res) => {
     console.log(err);
     if (err.code === 11000) {
       return res.status(400).json({ error: 'Domo already exists.' });
+    }
+
+    return res.status(400).json({ error: 'An error occured' });
+  });
+
+  return domoPromise;
+};
+
+const deleteDomo = (request, response) => {
+  const req = request;
+  const res = response;
+
+  domoPromise.catch((err) => {
+    console.log(err);
+    if (err.code === 11000) {
+      return res.status(400).json({ error: 'Failed to remove Domo' });
     }
 
     return res.status(400).json({ error: 'An error occured' });
@@ -60,3 +77,4 @@ const getDomos = (request, response) => {
 module.exports.makerPage = makerPage;
 module.exports.getDomos = getDomos;
 module.exports.make = makeDomo;
+module.exports.delete = deleteDomo;
