@@ -1,97 +1,112 @@
 
-const handleDomo = (e) => {
+const handleQuest = (e) => {
     e.preventDefault();
 
-    $("#domoMessage").animate({width:'hide'}, 350);
+    $("#questMessage").animate({width:'hide'}, 350);
 
-    if ($("#domoName").val() == '' || $("#domoAge").val() == '' || $("#domoAbility") == '') {
-        handleError("RAWR! All fields are required");
+    if ($("#questName").val() == '' || $("#questObjective").val() == '') {
+        handleError("All fields are required");
         return false;
     }
 
-    sendAjax('POST', $("#domoForm").attr("action"), $("#domoForm").serialize(), function() {
-        loadDomosFromServer();
+    sendAjax('POST', $("#questForm").attr("action"), $("#questForm").serialize(), function() {
+        loadQuestsFromServer();
     });
 
     return false;
 };
 
-const DomoForm = (props) => {
+const QuestForm = (props) => {
     return (
-        <form id="domoForm"
-            onSubmit={handleDomo}
-            name="domoForm"
+        <form id="questForm"
+            onSubmit={handleQuest}
+            name="questForm"
             action="/maker"
             method="POST"
-            className="domoForm"
+            className="questForm"
         >
             <label htmlFor="name">Name: </label>
-            <input id="domoName" type="text" name="name" placeholder="Domo Name" />
-            <label htmlFor="age">Age: </label>
-            <input id="domoAge" type="text" name="age" placeholder="Domo Age" />
-            <label htmlFor="ability">Special Ability: </label>
-            <input id="domoAbility" type="text" name="ability" placeholder="Domo Special Ability" />
+            <input id="questName" type="text" name="name" placeholder="Quest Name" />
+            
+            <label htmlFor="objective">Objective: </label>
+            <input id="questObjective" type="text" name="objective" placeholder="Quest Objective" />
+
+            <label htmlFor="description">Description: </label>
+            <input id="questDescription" type="text" name="description" placeholder="Quest Description" />
+
             <input type="hidden" name="_csrf" value={props.csrf} />
-            <input className="makeDomoSubmit" type="submit" value="Make Domo" />
+            <input className="makeQuestSubmit" type="submit" value="Make Quest" />
         </form>  
     );
 };
 
-const DomoList = function(props) {
-    if (props.domos.length === 0) {
-        return (
-            <div className="domoList">
-                <h3 className="emptyDomo">No Domos yet</h3>
-            </div>
-        );
-    }
-
-    const domoNodes = props.domos.map(function(domo) {
-        return (
-            <div key={domo._id} className="domo">
-                <img src="/assets/img/domoface.jpeg" alt="domo face" className="domoFace" />
-                <h3 className="domoName"> Name: {domo.name} </h3>
-                <h3 className="domoAge"> Age: {domo.age} </h3>
-                <h3 className="domoAbility"> Special Ability: {domo.ability} </h3>
-                <button className="removeDomo" type="text" onclick="removeDomo()"> Delete </button>
-            </div>
-        );
-    });
+const QuestListItem = (props) => {
+    const description = (props.description == "" || props.description == null)
+        ? <div></div>
+        : <h3 className="questDescription"> Description: {props.description} </h3>;
+    
+    const removeQuest = () => {
+        sendAjax('GET', '/removeQuest', `name=${props.name}&_csrf=${props.csrf}`, function() {
+            loadQuestsFromServer();
+        });
+    };        
 
     return (
-        <div className="domoList">
-            {domoNodes}
+        <div key={props.id} className="quest">
+            <h3 className="questName"> Name: {props.name} </h3>
+            <h3 className="questObjective"> Objective: {props.objective} </h3>
+            {description}
+            <input type="hidden" name="_csrf" value={props.csrf} />
+            <button key={props.id} className="removeQuest" type="text" onClick={removeQuest}> Delete </button>
         </div>
     );
 };
 
-const loadDomosFromServer = () => {
-    sendAjax('GET', '/getDomos', null, (data) => {
-        ReactDOM.render(
-            <DomoList domos={data.domos} />, document.querySelector("#domos")
+const QuestList = (props) => {
+    if (props.quests.length === 0) {
+        return (
+            <div className="questList">
+                <h3 className="emptyQuest">No Quests yet</h3>
+            </div>
+        );
+    }
+
+    const questNodes = props.quests.map((quest) => {
+        return (
+            <QuestListItem
+                id={quest._id}
+                name={quest.name}
+                objective={quest.objective}
+                description={quest.description}
+            />
         );
     });
+
+    return (
+        <div className="questList">
+            {questNodes}
+        </div>
+    );
 };
 
-const removeDomo = () => {
-    sendAjax('POST', '/deleteDomo', null, (data) => {
+const loadQuestsFromServer = () => {
+    sendAjax('GET', '/getQuests', null, (data) => {
         ReactDOM.render(
-            <DomoList domos={data.domos} />, document.querySelector("#domos")
+            <QuestList quests={data.quests} />, document.querySelector("#quests")
         );
     });
-    loadDomosFromServer();
 };
 
 const setup = function(csrf) {
     ReactDOM.render(
-        <DomoForm csrf={csrf} />, document.querySelector("#makeDomo")
+        <QuestForm csrf={csrf} />, document.querySelector("#makeQuest")
     );
-
+    
     ReactDOM.render(
-        <DomoList domos={[]} />, document.querySelector("#domos")
+        <QuestList csrf={csrf} quests={[]} />, document.querySelector("#quests")
     );
 
-    loadDomosFromServer();
+    loadQuestsFromServer();
 };
 
 const getToken = () => {
