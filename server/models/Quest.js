@@ -27,9 +27,9 @@ const QuestSchema = new mongoose.Schema({
 
   description: {
     type: String,
-    default: "",
+    default: '',
     trim: true,
-    set: setString
+    set: setString,
   },
 
   owner: {
@@ -57,7 +57,7 @@ QuestSchema.statics.deleteQuest = (ownerId, questName, callback) => {
   if (questName == null) {
     return QuestModel.find(search).remove({ name: null }).exec(callback);
   }
-  
+
   return QuestModel.find(search).remove({ name: questName }).exec(callback);
 };
 
@@ -69,7 +69,7 @@ QuestSchema.statics.updateQuest = (ownerId, questData, callback) => {
 
   return QuestModel
     .find(search)
-    .update({ 
+    .update({
       name: questData.newName,
       objective: questData.newObjective,
       description: questData.newDescription,

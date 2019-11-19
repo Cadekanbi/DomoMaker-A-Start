@@ -46,14 +46,14 @@ const makeQuest = (req, res) => {
 const removeQuest = (request, response) => {
   const req = request;
   const res = response;
-  
+
   if (req.query.name) {
     return Quest.QuestModel.deleteQuest(req.session.account._id, req.query.name, (err) => {
       if (err) {
         console.log(err);
-        return res.status(400).json({ 
+        return res.status(400).json({
           success: false,
-          error: 'An error occured. Failed to remove Quest'
+          error: 'An error occured. Failed to remove Quest',
         });
       }
 
@@ -68,10 +68,10 @@ const updateQuest = (request, response) => {
   const req = request;
   const res = response;
 
-  if (req.query.name == '' || req.query.name == 'null' || req.query.objective == '') {
+  if (req.query.name === '' || req.query.name === 'null' || req.query.objective === '') {
     return res.json({ success: false });
   }
-  
+
   const data = {
     name: req.query.name,
     newName: req.query.newName,
@@ -82,12 +82,12 @@ const updateQuest = (request, response) => {
   return Quest.QuestModel.updateQuest(
     req.session.account._id, data, (err) => {
       if (err) {
-        console.log("update - " + err);
+        console.log(`update - ${err}`);
         return res.status(400).json({ error: 'Quest failed to update.' });
       }
 
       return res.json({ success: true });
-  });
+    });
 };
 
 const getQuests = (request, response) => {
