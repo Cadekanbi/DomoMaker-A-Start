@@ -1,6 +1,5 @@
 
 const models = require('../models');
-
 const Quest = models.Quest;
 
 const makerPage = (req, res) => {
@@ -57,12 +56,38 @@ const removeQuest = (request, response) => {
           error: 'An error occured. Failed to remove Quest'
         });
       }
-      console.log('Quest removed');
+
       return res.json({ success: true });
     });
   }
 
   return false;
+};
+
+const updateQuest = (request, response) => {
+  const req = request;
+  const res = response;
+
+  if (req.query.name == '' || req.query.name == 'null' || req.query.objective == '') {
+    return res.json({ success: false });
+  }
+  
+  const data = {
+    name: req.query.name,
+    newName: req.query.newName,
+    newObjective: req.query.newObjective,
+    newDescription: req.query.newDescription,
+  };
+
+  return Quest.QuestModel.updateQuest(
+    req.session.account._id, data, (err) => {
+      if (err) {
+        console.log("update - " + err);
+        return res.status(400).json({ error: 'Quest failed to update.' });
+      }
+
+      return res.json({ success: true });
+  });
 };
 
 const getQuests = (request, response) => {
@@ -74,11 +99,13 @@ const getQuests = (request, response) => {
       console.log(err);
       return res.status(400).json({ error: 'An error occurred' });
     }
+
     return res.json({ quests: docs });
   });
 };
 
 module.exports.makerPage = makerPage;
+module.exports.makeQuest = makeQuest;
 module.exports.getQuests = getQuests;
-module.exports.make = makeQuest;
+module.exports.updateQuest = updateQuest;
 module.exports.removeQuest = removeQuest;

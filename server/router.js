@@ -6,12 +6,13 @@ const router = (app) => {
   app.get('/getToken', mid.requiresSecure, controllers.Account.getToken);
   app.get('/getQuests', mid.requiresLogin, controllers.Quest.getQuests);
   app.get('/removeQuest', mid.requiresLogin, controllers.Quest.removeQuest);
+  app.get('/updateQuest', mid.requiresLogin, controllers.Quest.updateQuest);
   app.get('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
   app.post('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.login);
   app.post('/signup', mid.requiresSecure, mid.requiresLogout, controllers.Account.signup);
   app.get('/logout', mid.requiresLogin, controllers.Account.logout);
   app.get('/maker', mid.requiresLogin, controllers.Quest.makerPage);
-  app.post('/maker', mid.requiresLogin, controllers.Quest.make);
+  app.post('/maker', mid.requiresLogin, controllers.Quest.makeQuest);
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
 };
 

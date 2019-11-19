@@ -54,8 +54,27 @@ QuestSchema.statics.deleteQuest = (ownerId, questName, callback) => {
   const search = {
     owner: convertId(ownerId),
   };
+  if (questName == null) {
+    return QuestModel.find(search).remove({ name: null }).exec(callback);
+  }
   
   return QuestModel.find(search).remove({ name: questName }).exec(callback);
+};
+
+QuestSchema.statics.updateQuest = (ownerId, questData, callback) => {
+  const search = {
+    owner: convertId(ownerId),
+    name: questData.name,
+  };
+
+  return QuestModel
+    .find(search)
+    .update({ 
+      name: questData.newName,
+      objective: questData.newObjective,
+      description: questData.newDescription,
+    })
+    .exec(callback);
 };
 
 QuestSchema.statics.findByOwner = (ownerId, callback) => {
