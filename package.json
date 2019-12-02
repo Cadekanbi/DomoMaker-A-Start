@@ -24,9 +24,10 @@
     "Redis",
     "Login"
   ],
-  "author": "Cody Van De Mark",
+  "author": "Cobey Adekanbi",
   "license": "Apache 2.0",
   "dependencies": {
+    "antd": "^3.26.0",
     "body-parser": "^1.15.0",
     "compression": "^1.6.1",
     "connect-redis": "^3.0.2",
@@ -39,10 +40,12 @@
     "jquery": "^3.4.1",
     "mongoose": "^4.4.6",
     "serve-favicon": "^2.3.0",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "webpack": "^4.41.2"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
+    "babel-plugin-import": "^1.13.0",
     "babel-preset-env": "^1.1.8",
     "babel-preset-react": "^6.24.1",
     "eslint": "^3.0.0",

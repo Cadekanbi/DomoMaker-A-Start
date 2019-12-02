@@ -18,7 +18,7 @@ const login = (request, response) => {
 
     // cast to strings for security
   const username = `${req.body.username}`;
-  const password = `${req.body.pass}`;
+  const password = `${req.body.password}`;
 
   if (!username || !password) {
     return res.status(400).json({ error: 'RAWR! All fields are required' });
@@ -41,18 +41,18 @@ const signup = (request, response) => {
 
     // cast to strings for security
   req.body.username = `${req.body.username}`;
-  req.body.pass = `${req.body.pass}`;
-  req.body.pass2 = `${req.body.pass2}`;
+  req.body.password = `${req.body.password}`;
+  req.body.password2 = `${req.body.password2}`;
 
-  if (!req.body.username || !req.body.pass || !req.body.pass2) {
+  if (!req.body.username || !req.body.password || !req.body.password2) {
     return res.status(400).json({ error: 'All fields are required' });
   }
 
-  if (req.body.pass !== req.body.pass2) {
+  if (req.body.password !== req.body.password2) {
     return res.status(400).json({ error: 'Passwords do not match' });
   }
 
-  return Account.AccountModel.generateHash(req.body.pass, (salt, hash) => {
+  return Account.AccountModel.generateHash(req.body.password, (salt, hash) => {
     const accountData = {
       username: req.body.username,
       salt,
