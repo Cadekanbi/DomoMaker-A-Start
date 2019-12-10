@@ -32,6 +32,13 @@ const QuestSchema = new mongoose.Schema({
     set: setString,
   },
 
+  tags: {
+    type: String,
+    default: '[]',
+    trim: true,
+    set: setString,
+  },
+
   owner: {
     type: mongoose.Schema.ObjectId,
     required: true,
@@ -71,6 +78,7 @@ QuestSchema.statics.updateQuest = (ownerId, questData, callback) => {
     .find(search)
     .update({
       name: questData.newName,
+      tags: questData.newTags,
       objective: questData.newObjective,
       description: questData.newDescription,
     })
@@ -82,7 +90,7 @@ QuestSchema.statics.findByOwner = (ownerId, callback) => {
     owner: convertId(ownerId),
   };
 
-  return QuestModel.find(search).select('name objective description').exec(callback);
+  return QuestModel.find(search).select('name tags objective description').exec(callback);
 };
 
 QuestModel = mongoose.model('Quest', QuestSchema);

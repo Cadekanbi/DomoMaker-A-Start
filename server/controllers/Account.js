@@ -12,6 +12,10 @@ const logout = (req, res) => {
   res.redirect('/');
 };
 
+// const changePassword = (request, response) => {
+
+// }
+
 const login = (request, response) => {
   const req = request;
   const res = response;
@@ -31,7 +35,7 @@ const login = (request, response) => {
 
     req.session.account = Account.AccountModel.toAPI(account);
 
-    return res.json({ redirect: '/maker' });
+    return res.json({ redirect: '/app' });
   });
 };
 
@@ -42,14 +46,9 @@ const signup = (request, response) => {
     // cast to strings for security
   req.body.username = `${req.body.username}`;
   req.body.password = `${req.body.password}`;
-  req.body.password2 = `${req.body.password2}`;
 
-  if (!req.body.username || !req.body.password || !req.body.password2) {
+  if (!req.body.username || !req.body.password) {
     return res.status(400).json({ error: 'All fields are required' });
-  }
-
-  if (req.body.password !== req.body.password2) {
-    return res.status(400).json({ error: 'Passwords do not match' });
   }
 
   return Account.AccountModel.generateHash(req.body.password, (salt, hash) => {
@@ -65,7 +64,7 @@ const signup = (request, response) => {
 
     savePromise.then(() => {
       req.session.account = Account.AccountModel.toAPI(newAccount);
-      return res.json({ redirect: '/maker' });
+      return res.json({ redirect: '/app' });
     });
 
     savePromise.catch((err) => {
@@ -95,4 +94,5 @@ module.exports.loginPage = loginPage;
 module.exports.login = login;
 module.exports.logout = logout;
 module.exports.signup = signup;
+//module.exports.changePassword = changePassword;
 module.exports.getToken = getToken;

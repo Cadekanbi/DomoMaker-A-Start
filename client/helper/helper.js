@@ -1,15 +1,9 @@
 
-const handleError = (message) => {
-    $("#errorMessage").text(message);
-    $("#questMessage").animate({width:'toggle'},350);
-};
-
 const redirect = (response) => {
-    $("#questMessage").animate({width:'hide'},350);
     window.location = response.redirect;
 };
 
-const sendAjax = (type, action, data, success) => {
+const sendAjax = (type, action, data, success, errorFunc) => {
     $.ajax({
         cache: false,
         type: type,
@@ -17,9 +11,9 @@ const sendAjax = (type, action, data, success) => {
         data: data,
         dataType: "json",
         success: success,
-        error: function(xhr, status, error) {
+        error: function(xhr) {
             let messageObj = JSON.parse(xhr.responseText);
-            handleError(messageObj.error);
+            errorFunc(messageObj.error);
         }
     });
 };

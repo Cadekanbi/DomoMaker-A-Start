@@ -1,16 +1,20 @@
 // Imports
+const Alert = antd.Alert;
 const Form = antd.Form;
 const Input = antd.Input;
 const { TextArea } = Input;
 const Button = antd.Button;
+const Checkbox = antd.Checkbox;
 const Tag = antd.Tag;
 const Icon = antd.Icon;
+const Row = antd.Row;
+const Col = antd.Col;
 
 // Windows
 const createLoginWindow = (csrf) => {
   const Login = Form.create()(LoginWindow);
   ReactDOM.render(
-    <Login csrf={csrf} />,
+    <Login csrf={csrf} toggleView={createSignupWindow} />,
     document.querySelector("#content")
   );
 };
@@ -18,28 +22,13 @@ const createLoginWindow = (csrf) => {
 const createSignupWindow = (csrf) => {
   const Signup = Form.create()(SignupWindow);
   ReactDOM.render(
-    <Signup csrf={csrf} />,
+    <Signup csrf={csrf} toggleView={createLoginWindow} />,
     document.querySelector("#content")
   );
 };
 
 // Initialization
 const setup = (csrf) => {
-  const loginButton = document.querySelector("#loginButton");
-  const signupButton = document.querySelector("#signupButton");
-
-  signupButton.addEventListener("click", (e) => {
-    e.preventDefault();
-    createSignupWindow(csrf);
-    return false;
-  });
-
-  loginButton.addEventListener("click", (e) => {
-    e.preventDefault();
-    createLoginWindow(csrf);
-    return false;
-  });
-
   createLoginWindow(csrf); // default view
 };
 

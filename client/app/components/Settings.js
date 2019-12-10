@@ -5,7 +5,7 @@
 
 // !!! Not yet implemented !!!
 
-class AccountWindow extends React.Component {
+class Settings extends React.Component {
     
     constructor (props) {
         super(props);

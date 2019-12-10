@@ -1,7 +1,15 @@
 
 @font-face {
-    font-family: 'QuestFont';
+    font-family: 'Ikaros';
+    src: url('./img/ikaros-Light.otf');
+}
+
+@font-face {
+    /* font-family: 'QuestFont';
     src: url('./img/Quest.ttf');
+    Overpass */
+    font-family: 'Exo';
+    src: url('https://fonts.googleapis.com/css?family=Exo&display=swap');
 }
 
 html, body {
@@ -10,7 +18,16 @@ html, body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-    font-family: 'QuestFont', 'Lato', 'Arial';
+    background: #4715a8 !important;
+    background: linear-gradient(135deg, rgba(71,21,168,1) 5%, rgba(105,59,196,1) 28%, #6a62fe 53%, #2bafe4 78%, rgba(0,212,255,1) 100%) !important;
+    /* font-family: 'Exo', 'QuestFont', 'Lato', 'Arial' !important; */
+}
+
+#siteHeader {
+    text-align: center;
+    font-size: 2.2em;
+    color: #e8f9ff;
+    font-family: 'Ikaros', sans-serif !important;
 }
 
 #logo {
@@ -19,7 +36,6 @@ html, body {
     padding-top: 5px;
     padding-left: 2%;
     float:left;
-    border-radius: 8px;
 }
 
 #title {
@@ -30,8 +46,12 @@ html, body {
 
 nav {
     width: 100%;
-    height: 50px;
-    background-color: #f1bc6d;
+    height: 5%;
+    background-color: #0e0b49;
+    padding-top: 5px;
+    -webkit-box-shadow: 0px -3px 22px 9px rgba(0,0,0,0.41);
+    -moz-box-shadow: 0px -3px 22px 9px rgba(0,0,0,0.41);
+    box-shadow: 0px -3px 22px 9px #00000069;
 }
 
 nav:nth-child(1) {
@@ -39,20 +59,17 @@ nav:nth-child(1) {
 }
 
 .navlink {
-    padding: 5px;
-    padding-top: 14px;
-    padding-right: 20px;
-    color: black;
-    font-size: 1.3em;
-    float: right;
+    position: absolute;
+    top: 12px;
+    right: 20px;
+    z-index: 2;
+    background: #2bafe4 !important;
 }
 
 .navlink a, .navlink a:link, .navlink a:visited, .navlink a:hover, .navlink a:active {
-    color: black;
+    color: rgb(255, 255, 255);
     text-decoration: none;
     padding: 5px;
-    border-radius: 4px;
-    background-color: #f1d09d;
     border: 1px solid black;
     transition: background-color 0.4s ease;
 }
@@ -60,6 +77,7 @@ nav:nth-child(1) {
 .navlink a:hover {
     transition: background-color 0.8s ease;
     background-color: #ffffff;
+    color: black;
 }
 
 .questForm {
@@ -95,7 +113,6 @@ nav:nth-child(1) {
 .makequestSubmit {
     color: black;
     text-decoration: none;
-    border-radius: 4px;
     background-color: #f1d09d;
     border: 1px solid black;
     transition: background-color 0.4s ease;
@@ -122,11 +139,14 @@ nav:nth-child(1) {
 }
 
 .mainForm {
-    height: 300px;
+    height: auto;
     width: 350px;
     margin: 0 auto;
     padding-top: 350px;
     font-size: 1.2em;
+}
+#username {
+    max-height: 50px;
 }
 
 .mainForm h3 {
@@ -144,7 +164,6 @@ nav:nth-child(1) {
 .formSubmit {
     color: black;
     text-decoration: none;
-    border-radius: 4px;
     background-color: #f1d09d;
     border: 1px solid black;
     transition: background-color 0.4s ease;
@@ -199,79 +218,63 @@ nav:nth-child(1) {
     font-style: italic;
 }
 
-#quest {
-    margin-top: -20px;
-    margin-left: 135px;
-    height: 450px;
-    width: 300px;
-    -ms-transform: rotate(330deg);
-    -webkit-transform: rotate(330deg); 
-    transform: rotate(330deg);
-}
-
 #quests {
     width: 40%;
     min-width: 400px;
     border: 2px solid #000000;
-    border-radius: 4px;
     margin: 0 auto;
-    margin-top:250px;
+    margin-top: 250px;
+}
+
+.ant-input {
+    padding-left: 0px !important;
+    min-height: unset !important;
+    border-color: #ffffff !important;
+    border-radius: 0 !important;
+    border-width: 2px !important;
+    border-image: linear-gradient(90deg, #020024 0%, #310980 12%, #00d4ff 100%) 0 0 100% 0 !important;  
+}
+
+.ant-button {
+    border-radius: 0 !important;
+}
+
+
+#loginForm .ant-button {
+    margin-top: 300px !important;
+    -webkit-transition: all 0.5s ease !important; /* Safari prior 6.1 */
+    transition: all 0.5s ease !important;
 }
 
 .quest {
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    border: 1px solid #acacac;
-    border-radius: 4px;
-    background-color: #d39e4f;
-    padding: 10px;
-    min-height:60px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    border: 1px solid #dddddd;
+    background-color: #ffffff;
+    padding: 20px 50px;
+    max-height: 400px;
     overflow: hidden;
 }
 
 .quest:hover {
     transition: border-color 0.2s ease-out;
-    border-color: rgba(163, 163, 163, 0.8);
-    transition: background-color 1s ease-out;
-    background-color: #f8d49d;
+    border-color: #1890ff;
+    transition: background-color .2s ease-out;
+    background-color: #ecf6ff;
 }
 
 .quest button {
-    color: black;
-    text-decoration: none;
-    border-radius: 4px;
-    background-color: #f1d09d;
-    border: 1px solid black;
-    transition: background-color 0.4s ease;
-    text-align: center;
+    margin: 0 10px;
     float: right;
-    margin: 2% 2%;
-    margin-top: 14px;
-    font-size: 1em;
-    width: 50px;
-    padding: 3px 0px;
-    font-family: 'QuestFont';
-    text-decoration: none;
+    min-width: 70px;
+    border-radius: 0px !important;
 }
-.quest div {
-    margin-top: 5%;
-}
-.quest .editDiv {
+/* .quest .editDiv {
     margin-bottom: 5px;
     display: inline-block;
-}
-
-.quest label {
-    float: left;
-}
-.quest textarea {
-    margin-left: 10px;
-    margin-right: 10px;
-    float: right;
-    width: 250px;
-}
+} */
 
 h3.emptyquest {
     width: 400px;
@@ -290,7 +293,7 @@ h3.questName {
 
 h3.questObjective {
     text-align: left;
-    margin-top: -10px;
+    margin-top: -8px;
     margin-left: 5px;
     width: 100%;
     font-weight: bold;
@@ -300,8 +303,8 @@ h3.questObjective {
 h3.questDescription {
     text-align: left;
     width: 100%;
-    margin-left: 12px;
-    font-weight: bold;
+    margin-top: 12px;
+    margin-left: 24px;
     font-size: 1.2em;
 }
 

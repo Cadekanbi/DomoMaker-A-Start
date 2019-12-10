@@ -2,7 +2,7 @@
 const models = require('../models');
 const Quest = models.Quest;
 
-const makerPage = (req, res) => {
+const appPage = (req, res) => {
   Quest.QuestModel.findByOwner(req.session.account._id, (err, docs) => {
     if (err) {
       console.log(err);
@@ -22,6 +22,7 @@ const makeQuest = (req, res) => {
     name: req.body.name,
     objective: req.body.objective,
     description: req.body.description,
+    tags: req.body.tags,
     owner: req.session.account._id,
   };
 
@@ -29,7 +30,7 @@ const makeQuest = (req, res) => {
 
   const questPromise = newQuest.save();
 
-  questPromise.then(() => res.json({ redirect: '/maker' }));
+  questPromise.then(() => res.json({ redirect: '/app' }));
 
   questPromise.catch((err) => {
     console.log(err);
@@ -75,6 +76,7 @@ const updateQuest = (request, response) => {
   const data = {
     name: req.query.name,
     newName: req.query.newName,
+    newTags: req.query.newTags,
     newObjective: req.query.newObjective,
     newDescription: req.query.newDescription,
   };
@@ -104,7 +106,7 @@ const getQuests = (request, response) => {
   });
 };
 
-module.exports.makerPage = makerPage;
+module.exports.appPage = appPage;
 module.exports.makeQuest = makeQuest;
 module.exports.getQuests = getQuests;
 module.exports.updateQuest = updateQuest;

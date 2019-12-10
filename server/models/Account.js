@@ -47,6 +47,23 @@ const validatePassword = (doc, password, callback) => {
   });
 };
 
+// AccountSchema.statics.changePassword = (username, password, newPassword, callback) => {
+//   if (username && password && newPassword)
+//   return AccountModel.statics.authenticate(username, password, () => {
+//     const search = {
+//       owner: convertId(ownerId),
+//       name: questData.name,
+//     };
+  
+//     return AccountModel
+//       .find(search)
+//       .update({
+//         password: newPassword,
+//       })
+//       .exec(callback);
+//   });
+// }
+ 
 AccountSchema.statics.findByUsername = (name, callback) => {
   const search = {
     username: name,
